@@ -31,12 +31,12 @@
 # Implementation Plan
 - Update to TOML :white_check_mark:
 - Update latest dependencies :white_check_mark:
-- Implement Hilt
-    - Add NetworkModule
-    - Update Application
-    - Update Service Provider (use Hilt)
-    - Update FactViewModel to use serviceProvider and enable DI
-    - Inject ViewModel on Activity
+- Implement Hilt :white_check_mark:
+    - Add NetworkModule :white_check_mark:
+    - Update Application :white_check_mark:
+    - Update Service Provider (use Hilt) :white_check_mark:
+    - Update FactViewModel to use serviceProvider and enable DI :white_check_mark:
+    - Inject ViewModel on Activity :white_check_mark:
 - Consider moving FactResponse to separate class
 - Add FactEntity
 - Add FactLocalDataSource

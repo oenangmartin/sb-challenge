@@ -61,6 +61,7 @@ fun FactScreen(
 @Composable
 private fun FactScreenPreview() {
     EdisonAndroidExerciseTheme {
-        FactScreen(viewModel = FactViewModel())
+        // TODO Martin: Update FactViewModel later, currently it's hard to use
+//        FactScreen(viewModel = FactViewModel())
     }
 }
