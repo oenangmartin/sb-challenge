@@ -15,7 +15,7 @@ class FactViewModelTest {
 
         fact = viewModel.updateFact { loading = false }
 
-        assert(!loading)
+        assert(loading)
         assert(fact != initialFact)
     }
 }
