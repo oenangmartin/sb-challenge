@@ -22,7 +22,6 @@
 
 
 # Non Core Requirements:
-- Update to KSP
 - Update to toml
 - Update to latest Dependencies
 - Implement Hilt
@@ -30,9 +29,8 @@
 
 
 # Implementation Plan
-- Update to TOML
-- Update latest dependencies
-- Update to KSP
+- Update to TOML :white_check_mark:
+- Update latest dependencies :white_check_mark:
 - Implement Hilt
     - Add NetworkModule
     - Update Application
