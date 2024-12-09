@@ -9,13 +9,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
+import jp.speakbuddy.edisonandroidexercise.ui.fact.FactRoute
 import jp.speakbuddy.edisonandroidexercise.ui.fact.FactScreen
 import jp.speakbuddy.edisonandroidexercise.ui.fact.FactViewModel
 import jp.speakbuddy.edisonandroidexercise.ui.theme.EdisonAndroidExerciseTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val factViewModel: FactViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    FactScreen(viewModel = factViewModel)
+                    FactRoute()
                 }
             }
         }
