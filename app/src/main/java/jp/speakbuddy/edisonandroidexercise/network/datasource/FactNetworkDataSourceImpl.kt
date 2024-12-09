@@ -8,8 +8,6 @@ class FactNetworkDataSourceImpl @Inject constructor(
     private val factService: FactService,
 ): FactNetworkDataSource {
     override suspend fun getFact(): Result<FactResponse> {
-        return runCatching {
-            factService.getFact()
-        }
+        return runCatching { factService.getFact() }
     }
 }
