@@ -38,8 +38,8 @@
     - Update FactViewModel to use serviceProvider and enable DI :white_check_mark:
     - Inject ViewModel on Activity :white_check_mark:
 - Consider moving FactResponse to separate class :white_check_mark:
-- Add FactEntity
-- Add FactLocalDataSource
+- Add FactEntity :white_check_mark:
+- Add FactLocalDataSource :white_check_mark:
 - Add FactNetworkDataSource :white_check_mark:
 - Add FactData
 - Add FactRepository

@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.speakbuddy.edisonandroidexercise.common.DispatcherProvider
 import jp.speakbuddy.edisonandroidexercise.local.data.FactEntity
-import jp.speakbuddy.edisonandroidexercise.local.datasource.FactLocalDataSource
 import jp.speakbuddy.edisonandroidexercise.network.data.FactResponse
 import jp.speakbuddy.edisonandroidexercise.network.datasource.FactNetworkDataSource
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class FactViewModel @Inject constructor(
     private val factNetworkDataSource: FactNetworkDataSource,
-    private val factLocalDataSource: FactLocalDataSource,
     private val dispatcherProvider: DispatcherProvider,
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<FactUiState> = MutableStateFlow(FactUiState.INITIAL)
@@ -27,7 +25,6 @@ class FactViewModel @Inject constructor(
         viewModelScope.launch(dispatcherProvider.main) {
             factNetworkDataSource.getFact()
                 .onSuccess { factResponse ->
-                    factLocalDataSource.updateFact(factResponse.toEntity())
                     _uiState.update {
                         FactUiState.Content(factResponse.fact)
                     }
