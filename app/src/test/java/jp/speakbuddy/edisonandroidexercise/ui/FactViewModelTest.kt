@@ -5,7 +5,7 @@ import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.mockk
 import jp.speakbuddy.edisonandroidexercise.common.DispatcherProvider
-import jp.speakbuddy.edisonandroidexercise.data.FactResponse
+import jp.speakbuddy.edisonandroidexercise.network.data.FactResponse
 import jp.speakbuddy.edisonandroidexercise.network.datasource.FactNetworkDataSource
 import jp.speakbuddy.edisonandroidexercise.ui.common.DefaultTestDispatcherProvider
 import jp.speakbuddy.edisonandroidexercise.ui.fact.FactUiState
