@@ -1,6 +1,6 @@
 package jp.speakbuddy.edisonandroidexercise.network
 
-import jp.speakbuddy.edisonandroidexercise.data.FactResponse
+import jp.speakbuddy.edisonandroidexercise.network.data.FactResponse
 import retrofit2.http.GET
 
 interface FactService {

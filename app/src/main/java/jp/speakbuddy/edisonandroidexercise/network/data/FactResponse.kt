@@ -1,4 +1,4 @@
-package jp.speakbuddy.edisonandroidexercise.data
+package jp.speakbuddy.edisonandroidexercise.network.data
 
 import kotlinx.serialization.Serializable
 
