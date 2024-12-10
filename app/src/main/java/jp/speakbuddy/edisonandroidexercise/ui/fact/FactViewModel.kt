@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.speakbuddy.edisonandroidexercise.common.DispatcherProvider
-import jp.speakbuddy.edisonandroidexercise.local.data.FactEntity
-import jp.speakbuddy.edisonandroidexercise.network.data.FactResponse
 import jp.speakbuddy.edisonandroidexercise.network.datasource.FactNetworkDataSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -38,5 +36,3 @@ class FactViewModel @Inject constructor(
         }
     }
 }
-
-private fun FactResponse.toEntity() = FactEntity(fact, length)
