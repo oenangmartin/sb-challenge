@@ -37,10 +37,10 @@
     - Update Service Provider (use Hilt) :white_check_mark:
     - Update FactViewModel to use serviceProvider and enable DI :white_check_mark:
     - Inject ViewModel on Activity :white_check_mark:
-- Consider moving FactResponse to separate class
+- Consider moving FactResponse to separate class :white_check_mark:
 - Add FactEntity
 - Add FactLocalDataSource
-- Add FactNetworkDataSource
+- Add FactNetworkDataSource :white_check_mark:
 - Add FactData
 - Add FactRepository
 - Update FactViewModel to use FactRepository

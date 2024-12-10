@@ -1,15 +1,9 @@
 package jp.speakbuddy.edisonandroidexercise.network
 
-import kotlinx.serialization.Serializable
+import jp.speakbuddy.edisonandroidexercise.data.FactResponse
 import retrofit2.http.GET
 
 interface FactService {
     @GET("fact")
     suspend fun getFact(): FactResponse
 }
-
-@Serializable
-data class FactResponse(
-    val fact: String,
-    val length: Int
-)

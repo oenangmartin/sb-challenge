@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.datastore.preferences)
     implementation(libs.hilt.android)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.material3)
     implementation(libs.okhttp)
     implementation(libs.protobuf.kotlin.lite)
@@ -86,7 +87,9 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
+    testImplementation(libs.coroutine.test)
     testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso)
     androidTestImplementation(libs.ui.test.junit4)
