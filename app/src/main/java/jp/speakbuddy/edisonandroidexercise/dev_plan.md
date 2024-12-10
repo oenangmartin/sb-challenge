@@ -40,7 +40,7 @@
 - Consider moving FactResponse to separate class :white_check_mark:
 - Add FactEntity
 - Add FactLocalDataSource
-- Add FactNetworkDataSource
+- Add FactNetworkDataSource :white_check_mark:
 - Add FactData
 - Add FactRepository
 - Update FactViewModel to use FactRepository
