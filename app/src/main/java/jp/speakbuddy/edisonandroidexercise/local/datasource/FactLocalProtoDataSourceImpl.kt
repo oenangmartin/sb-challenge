@@ -8,9 +8,9 @@ import javax.inject.Inject
 class FactLocalProtoDataSourceImpl @Inject constructor(
     private val factDataStore: DataStore<FactEntity>,
 ): FactLocalDataSource {
-    override suspend fun getFact(): FactEntity = factDataStore.data.firstOrNull() ?: FactEntity()
+    override suspend fun getFact(): FactEntity? = factDataStore.data.firstOrNull()
 
-    override suspend fun updateFact(factEntity: FactEntity) {
-        factDataStore.updateData { factEntity }
+    override suspend fun updateFact(factEntity: FactEntity): FactEntity {
+        return factDataStore.updateData { factEntity }
     }
 }

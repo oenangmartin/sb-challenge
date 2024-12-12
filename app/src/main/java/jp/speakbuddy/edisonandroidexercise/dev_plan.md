@@ -41,9 +41,9 @@
 - Add FactEntity :white_check_mark:
 - Add FactLocalDataSource :white_check_mark:
 - Add FactNetworkDataSource :white_check_mark:
-- Add FactData
-- Add FactRepository
-- Update FactViewModel to use FactRepository
+- Add FactData :white_check_mark: (renamed to FactModel)
+- Add FactRepository :white_check_mark:
+- Update FactViewModel to use FactRepository :white_check_mark:
 - Create FactDisplayMapper
     - Main Function -> Map FactData to FactDisplay Data
     - Add Fact Length (value with visibility?)
