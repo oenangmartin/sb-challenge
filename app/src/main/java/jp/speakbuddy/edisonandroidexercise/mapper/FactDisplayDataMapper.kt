@@ -4,8 +4,8 @@ import jp.speakbuddy.edisonandroidexercise.repository.model.FactModel
 import jp.speakbuddy.edisonandroidexercise.ui.fact.FactDisplayData
 import javax.inject.Inject
 
-const val FACT_LENGTH_VISIBILITY_THRESHOLD = 100
-const val MULTIPLE_CATS = "cats"
+internal const val FACT_LENGTH_VISIBILITY_THRESHOLD = 100
+internal const val MULTIPLE_CATS = "cats"
 
 class FactDisplayDataMapper @Inject constructor() {
     fun map(factModel: FactModel): FactDisplayData {
