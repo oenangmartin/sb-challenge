@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -13,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -48,11 +50,16 @@ fun FactScreen(
 ) {
     when (uiState) {
         is FactUiState.Content -> {
-            FactContent(factContent = uiState, onRefreshClicked = onRefreshClicked)
+            FactContent(
+                factDisplayData = uiState.factDisplayData,
+                onRefreshClicked = onRefreshClicked
+            )
         }
+
         is FactUiState.Error -> {
             // TODO add Error screen later
         }
+
         FactUiState.Loading -> {
             // TODO add loading mechanism
         }
@@ -62,7 +69,7 @@ fun FactScreen(
 @Composable
 fun FactContent(
     modifier: Modifier = Modifier,
-    factContent: FactUiState.Content,
+    factDisplayData: FactDisplayData,
     onRefreshClicked: () -> Unit,
 ) {
     Column(
@@ -82,9 +89,19 @@ fun FactContent(
         )
 
         Text(
-            text = factContent.fact,
+            text = factDisplayData.fact,
             style = MaterialTheme.typography.bodyLarge
         )
+
+        factDisplayData.length?.let {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                textAlign = TextAlign.End,
+                text = it,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
 
         Button(onClick = onRefreshClicked) {
             Text(text = "Update fact")
@@ -96,6 +113,12 @@ fun FactContent(
 @Composable
 private fun FactScreenPreview() {
     EdisonAndroidExerciseTheme {
-        FactScreen(uiState = FactUiState.Content("This is sample facts"), onRefreshClicked = { })
+        FactScreen(uiState = FactUiState.Content(
+            FactDisplayData(
+                fact = "This is sample fact",
+                length = "Sample length",
+                showMultipleCats = true,
+            )
+        ), onRefreshClicked = { })
     }
 }

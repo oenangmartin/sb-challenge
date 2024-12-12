@@ -28,7 +28,7 @@ class OfflineFirstFactRepositoryTest {
     )
 
     @Test
-    fun testGetFact_noForceFetch_returnsLocalData() = runTest {
+    fun `when getFact is triggered and local data source is available, it should return local data source and no network call`() = runTest {
         // Arrange
         val localFact = FactEntity("Local fact", 10)
         coEvery { factLocalDataSource.getFact() } returns localFact
@@ -42,22 +42,26 @@ class OfflineFirstFactRepositoryTest {
     }
 
     @Test
-    fun testGetFact_forceFetch_fetchesFromRemote() = runTest {
+    fun `when getFact is triggered with forceFetch true, it should save to local and return local data`() = runTest {
         // Arrange
         val remoteFact = FactResponse("Remote fact", 12)
+        val expectedValue = FactEntity("Updated Remote fact", 12)
         coEvery { factNetworkDataSource.getFact() } returns Result.success(remoteFact)
-        coEvery { factLocalDataSource.updateFact(any()) } returns FactEntity("Remote fact", 12)
+        coEvery { factLocalDataSource.updateFact(any()) } returns expectedValue
 
         // Act
         val result = repository.getFact(forceFetch = true)
 
         // Assert
-        assertEquals(Result.success(FactModel("Remote fact", 12)), result)
-        coVerify { factNetworkDataSource.getFact() } // Verify network was called
+        assertEquals(Result.success(FactModel("Updated Remote fact", 12)), result)
+        coVerify {
+            factNetworkDataSource.getFact() // Verify network was called
+            factLocalDataSource.updateFact(FactEntity("Remote fact", 12)) // verify update to local
+        }
     }
 
     @Test
-    fun testGetFact_noLocalData_fetchesFromRemote() = runTest {
+    fun `when getFact is triggered without local data, it should fetch from remote, store to local and return local data`() = runTest {
         // Arrange
         val remoteFact = FactResponse("Remote fact", 12)
         coEvery { factLocalDataSource.getFact() } returns null
@@ -73,7 +77,7 @@ class OfflineFirstFactRepositoryTest {
     }
 
     @Test
-    fun testGetFact_networkError_returnsFailure() = runTest {
+    fun `when getFact is triggered and no local data and network error, should return Result failure with exception`() = runTest {
         // Arrange
         coEvery { factLocalDataSource.getFact() } returns null
         coEvery { factNetworkDataSource.getFact() } returns Result.failure(Exception("Network error"))

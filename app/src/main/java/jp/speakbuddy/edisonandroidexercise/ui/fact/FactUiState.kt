@@ -6,7 +6,7 @@ sealed interface FactUiState {
     }
     data object Loading: FactUiState
     data class Content(
-        val fact: String,
+        val factDisplayData: FactDisplayData,
     ) : FactUiState
 
     data class Error(
