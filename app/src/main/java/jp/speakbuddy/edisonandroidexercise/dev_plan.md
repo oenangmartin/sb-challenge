@@ -41,12 +41,12 @@
 - Add FactEntity :white_check_mark:
 - Add FactLocalDataSource :white_check_mark:
 - Add FactNetworkDataSource :white_check_mark:
-- Add FactData :white_check_mark: (renamed to FactModel)
+- Add FactModel :white_check_mark:
 - Add FactRepository :white_check_mark:
 - Update FactViewModel to use FactRepository :white_check_mark:
 - Create FactDisplayMapper
-    - Main Function -> Map FactData to FactDisplay Data
-    - Add Fact Length (value with visibility?)
-    - Add Multiple Cats (value with visibility?)
+    - Main Function -> Map FactModel to FactDisplayData
+    - Add Fact Length
+    - Add Multiple Cats
     - Add Unit Tests
 - Plan about showing image

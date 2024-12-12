@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.speakbuddy.edisonandroidexercise.common.DispatcherProvider
+import jp.speakbuddy.edisonandroidexercise.mapper.FactDisplayDataMapper
 import jp.speakbuddy.edisonandroidexercise.repository.FactRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FactViewModel @Inject constructor(
     private val factRepository: FactRepository,
+    private val factDisplayDataMapper: FactDisplayDataMapper,
     private val dispatcherProvider: DispatcherProvider,
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<FactUiState> = MutableStateFlow(FactUiState.INITIAL)
@@ -22,9 +24,12 @@ class FactViewModel @Inject constructor(
     fun updateFact(forceFetch: Boolean) {
         viewModelScope.launch(dispatcherProvider.main) {
             factRepository.getFact(forceFetch)
-                .onSuccess { factResponse ->
+                .map {
+                    factDisplayDataMapper.map(it)
+                }
+                .onSuccess { factDisplayData ->
                     _uiState.update {
-                        FactUiState.Content(factResponse.fact)
+                        FactUiState.Content(factDisplayData)
                     }
                 }
                 .onFailure { throwable ->
