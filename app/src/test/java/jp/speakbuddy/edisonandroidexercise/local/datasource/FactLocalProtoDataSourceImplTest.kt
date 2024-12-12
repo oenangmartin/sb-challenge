@@ -39,9 +39,8 @@ class FactLocalProtoDataSourceImplTest {
     }
 
     @Test
-    fun `when flow return null should return default value`() = runTest {
+    fun `when flow return null should return null`() = runTest {
         // Arrange
-        val expectedFact = FactEntity()
         val mockFlow = mockk<Flow<FactEntity>>()
         coEvery { mockFlow.firstOrNull() } returns null
         coEvery { mockFlow.collect(any()) } just Runs
@@ -51,7 +50,7 @@ class FactLocalProtoDataSourceImplTest {
         val actualFact = factLocalProtoDataSourceImpl.getFact()
 
         // Assert
-        assertEquals(expectedFact, actualFact)
+        assertEquals(null, actualFact)
     }
 
     @Test

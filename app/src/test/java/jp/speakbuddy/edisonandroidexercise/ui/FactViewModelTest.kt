@@ -5,8 +5,8 @@ import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.mockk
 import jp.speakbuddy.edisonandroidexercise.common.DispatcherProvider
-import jp.speakbuddy.edisonandroidexercise.network.data.FactResponse
-import jp.speakbuddy.edisonandroidexercise.network.datasource.FactNetworkDataSource
+import jp.speakbuddy.edisonandroidexercise.repository.FactRepository
+import jp.speakbuddy.edisonandroidexercise.repository.model.FactModel
 import jp.speakbuddy.edisonandroidexercise.ui.common.DefaultTestDispatcherProvider
 import jp.speakbuddy.edisonandroidexercise.ui.fact.FactUiState
 import jp.speakbuddy.edisonandroidexercise.ui.fact.FactViewModel
@@ -17,9 +17,9 @@ import org.junit.Test
 import java.io.IOException
 
 class FactViewModelTest {
-    private val factNetworkDataSource: FactNetworkDataSource = mockk()
+    private val factRepository: FactRepository = mockk()
     private val dispatcherProvider: DispatcherProvider = DefaultTestDispatcherProvider()
-    private val viewModel = FactViewModel(factNetworkDataSource, dispatcherProvider)
+    private val viewModel = FactViewModel(factRepository, dispatcherProvider)
 
     @After
     fun afterEach() {
@@ -29,8 +29,8 @@ class FactViewModelTest {
     @Test
     fun `when updateFact is triggered and fetchNetwork Success, should return ui state with facts correctly`() = runTest {
         val newFact = "New Facts"
-        coEvery { factNetworkDataSource.getFact() } returns Result.success(
-            FactResponse(
+        coEvery { factRepository.getFact(false) } returns Result.success(
+            FactModel(
                 length = newFact.length,
                 fact = newFact
             )
@@ -38,7 +38,7 @@ class FactViewModelTest {
 
         viewModel.uiState.test {
             assertEquals(FactUiState.INITIAL, awaitItem())
-            viewModel.updateFact()
+            viewModel.updateFact(false)
             assertEquals(FactUiState.Content(newFact), awaitItem())
             ensureAllEventsConsumed()
         }
@@ -46,11 +46,11 @@ class FactViewModelTest {
 
     @Test
     fun `when updateFact is triggered and fetchNetwork Failure, should return ui state with facts correctly`() = runTest {
-        coEvery { factNetworkDataSource.getFact() } returns Result.failure(IOException())
+        coEvery { factRepository.getFact(false) } returns Result.failure(IOException())
 
         viewModel.uiState.test {
             assertEquals(FactUiState.INITIAL, awaitItem())
-            viewModel.updateFact()
+            viewModel.updateFact(false)
             assertEquals(FactUiState.Error("Dummy Error Message now"), awaitItem())
             ensureAllEventsConsumed()
         }
