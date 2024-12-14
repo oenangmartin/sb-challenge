@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lottie.compose)
     implementation(libs.material3)
     implementation(libs.okhttp)
     implementation(libs.protobuf.kotlin.lite)

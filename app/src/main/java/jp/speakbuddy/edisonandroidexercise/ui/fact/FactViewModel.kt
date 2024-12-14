@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.speakbuddy.edisonandroidexercise.common.DispatcherProvider
 import jp.speakbuddy.edisonandroidexercise.mapper.FactDisplayDataMapper
 import jp.speakbuddy.edisonandroidexercise.repository.FactRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -30,6 +31,13 @@ class FactViewModel @Inject constructor(
                 .onSuccess { factDisplayData ->
                     _uiState.update {
                         FactUiState.Content(factDisplayData)
+                    }
+
+                    if (factDisplayData.showMultipleCats) {
+                        delay(2000L)
+                        _uiState.update {
+                            FactUiState.Content(factDisplayData.copy(showMultipleCats = false))
+                        }
                     }
                 }
                 .onFailure { throwable ->

@@ -15,7 +15,7 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class FactLocalProtoDataSourceImplTest {
+class FactLocalProtoDataLottieSourceImplTest {
 
     private val factDataStore: DataStore<FactEntity> = mockk()
     private val factLocalProtoDataSourceImpl = FactLocalProtoDataSourceImpl(factDataStore)
