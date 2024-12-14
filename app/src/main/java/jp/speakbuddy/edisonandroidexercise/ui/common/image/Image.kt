@@ -11,7 +11,8 @@ fun Image(
     contentDescription: String? = null,
 ) {
     AsyncImage(
-        imageSource.getSource(),
+        modifier = modifier,
+        model = imageSource.getSource(),
         contentDescription = contentDescription
     )
 }

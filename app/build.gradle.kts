@@ -70,6 +70,7 @@ protobuf {
 dependencies {
     implementation(libs.activity.compose)
     implementation(libs.coil.compose)
+    implementation(libs.coil.network)
     implementation(libs.compose.ui)
     implementation(libs.core.ktx)
     implementation(libs.datastore)
