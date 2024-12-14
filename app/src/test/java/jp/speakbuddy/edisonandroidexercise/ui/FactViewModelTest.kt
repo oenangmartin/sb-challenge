@@ -9,6 +9,7 @@ import jp.speakbuddy.edisonandroidexercise.mapper.FactDisplayDataMapper
 import jp.speakbuddy.edisonandroidexercise.repository.FactRepository
 import jp.speakbuddy.edisonandroidexercise.repository.model.FactModel
 import jp.speakbuddy.edisonandroidexercise.ui.common.DefaultTestDispatcherProvider
+import jp.speakbuddy.edisonandroidexercise.ui.common.image.ImageSource
 import jp.speakbuddy.edisonandroidexercise.ui.fact.FactDisplayData
 import jp.speakbuddy.edisonandroidexercise.ui.fact.FactUiState
 import jp.speakbuddy.edisonandroidexercise.ui.fact.FactViewModel
@@ -25,6 +26,9 @@ class FactViewModelTest {
     private val dispatcherProvider: DefaultTestDispatcherProvider = DefaultTestDispatcherProvider()
     private val viewModel = FactViewModel(factRepository, factDisplayDataMapper, dispatcherProvider)
 
+    private val expectedImageSource =
+        ImageSource.Url("https://png.pngtree.com/png-clipart/20220626/original/pngtree-pink-cute-cat-icon-animal-png-yuri-png-image_8188672.png")
+
     @After
     fun afterEach() {
         clearAllMocks()
@@ -39,9 +43,10 @@ class FactViewModelTest {
                 fact = newFact
             )
             val expectedFactDisplayData = FactDisplayData(
-                "New Facts",
-                length = null,
-                showMultipleCats = false,
+                headerImage = expectedImageSource,
+                title = "A Very Long Fact",
+                fact = "Long fact",
+                showMultipleCats = false
             )
             coEvery { factRepository.getFact(false) } returns Result.success(factModel)
             every { factDisplayDataMapper.map(factModel) } returns expectedFactDisplayData
@@ -64,14 +69,16 @@ class FactViewModelTest {
                 fact = newFact
             )
             val expectedFactDisplayData = FactDisplayData(
-                "New Facts",
-                length = null,
-                showMultipleCats = true,
+                headerImage = expectedImageSource,
+                title = "A Very Long Fact",
+                fact = "Long fact",
+                showMultipleCats = true
             )
             val updatedFactDisplayData = FactDisplayData(
-                "New Facts",
-                length = null,
-                showMultipleCats = false,
+                headerImage = expectedImageSource,
+                title = "A Very Long Fact",
+                fact = "Long fact",
+                showMultipleCats = false
             )
             coEvery { factRepository.getFact(false) } returns Result.success(factModel)
             every { factDisplayDataMapper.map(factModel) } returns expectedFactDisplayData

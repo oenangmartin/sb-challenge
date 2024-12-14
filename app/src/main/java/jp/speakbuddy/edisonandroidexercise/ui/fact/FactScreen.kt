@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
@@ -25,6 +24,8 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import jp.speakbuddy.edisonandroidexercise.ui.common.TypeWriterText
+import jp.speakbuddy.edisonandroidexercise.ui.common.image.Image
+import jp.speakbuddy.edisonandroidexercise.ui.common.image.ImageSource
 import jp.speakbuddy.edisonandroidexercise.ui.common.lottie.AnimatorComponent
 import jp.speakbuddy.edisonandroidexercise.ui.common.lottie.LottieSource
 import jp.speakbuddy.edisonandroidexercise.ui.theme.EdisonAndroidExerciseTheme
@@ -93,11 +94,19 @@ fun FactContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(
                 space = 16.dp,
-                alignment = Alignment.CenterVertically
+                alignment = Alignment.Top
             )
         ) {
+            Image(
+                modifier = Modifier
+                    .size(
+                        width = 160.dp,
+                        height = 160.dp,
+                    ),
+                imageSource = factDisplayData.headerImage
+            )
             Text(
-                text = "Fact",
+                text = factDisplayData.title,
                 style = MaterialTheme.typography.titleLarge
             )
 
@@ -105,17 +114,6 @@ fun FactContent(
                 text = factDisplayData.fact,
                 style = MaterialTheme.typography.bodyLarge
             )
-
-            factDisplayData.length?.let {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.End,
-                    text = it,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-
             Button(onClick = onRefreshClicked) {
                 Text(text = "Update fact")
             }
@@ -158,8 +156,9 @@ private fun FactScreenPreview() {
     EdisonAndroidExerciseTheme {
         FactScreen(uiState = FactUiState.Content(
             FactDisplayData(
+                ImageSource.Url("https://png.pngtree.com/png-clipart/20220626/original/pngtree-pink-cute-cat-icon-animal-png-yuri-png-image_8188672.png"),
+                title = "Sample length",
                 fact = "This is sample fact",
-                length = "Sample length",
                 showMultipleCats = true,
             )
         ), onRefreshClicked = { })

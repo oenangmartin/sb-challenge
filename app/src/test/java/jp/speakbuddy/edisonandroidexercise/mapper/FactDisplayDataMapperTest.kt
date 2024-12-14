@@ -1,5 +1,7 @@
 package jp.speakbuddy.edisonandroidexercise.mapper
+
 import jp.speakbuddy.edisonandroidexercise.repository.model.FactModel
+import jp.speakbuddy.edisonandroidexercise.ui.common.image.ImageSource
 import jp.speakbuddy.edisonandroidexercise.ui.fact.FactDisplayData
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -7,6 +9,8 @@ import org.junit.Test
 class FactDisplayDataMapperTest {
 
     private val mapper = FactDisplayDataMapper()
+    private val expectedImageSource =
+        ImageSource.Url("https://png.pngtree.com/png-clipart/20220626/original/pngtree-pink-cute-cat-icon-animal-png-yuri-png-image_8188672.png")
 
     @Test
     fun `when map is triggered with fact length less than 100, it should set length to null`() {
@@ -17,7 +21,15 @@ class FactDisplayDataMapperTest {
         val result = mapper.map(factModel)
 
         // Assert
-        assertEquals(FactDisplayData("Short fact", null, false), result)
+        assertEquals(
+            FactDisplayData(
+                headerImage = expectedImageSource,
+                title = "Fact",
+                fact = "Short fact",
+                showMultipleCats = false
+            ),
+            result
+        )
     }
 
     @Test
@@ -29,7 +41,15 @@ class FactDisplayDataMapperTest {
         val result = mapper.map(factModel)
 
         // Assert
-        assertEquals(FactDisplayData("Long fact", "Length > 100", false), result)
+        assertEquals(
+            FactDisplayData(
+                headerImage = expectedImageSource,
+                title = "A Very Long Fact",
+                fact = "Long fact",
+                showMultipleCats = false
+            ),
+            result
+        )
     }
 
     @Test
@@ -41,18 +61,14 @@ class FactDisplayDataMapperTest {
         val result = mapper.map(factModel)
 
         // Assert
-        assertEquals(FactDisplayData("Fact about $MULTIPLE_CATS", null, true), result)
-    }
-
-    @Test
-    fun `when map is triggered with no multiple cats, it should not show multiple cats`() {
-        // Arrange
-        val factModel = FactModel("Fact about dogs", length = 50)
-
-        // Act
-        val result = mapper.map(factModel)
-
-        // Assert
-        assertEquals(FactDisplayData("Fact about dogs", null, false), result)
+        assertEquals(
+            FactDisplayData(
+                headerImage = expectedImageSource,
+                fact = "Fact about $MULTIPLE_CATS",
+                title = "Fact",
+                showMultipleCats = true
+            ),
+            result
+        )
     }
 }
