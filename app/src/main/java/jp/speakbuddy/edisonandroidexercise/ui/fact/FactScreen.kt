@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import jp.speakbuddy.edisonandroidexercise.ui.common.TypeWriterText
 import jp.speakbuddy.edisonandroidexercise.ui.theme.EdisonAndroidExerciseTheme
 
 @Composable
@@ -88,7 +89,7 @@ fun FactContent(
             style = MaterialTheme.typography.titleLarge
         )
 
-        Text(
+        TypeWriterText(
             text = factDisplayData.fact,
             style = MaterialTheme.typography.bodyLarge
         )
