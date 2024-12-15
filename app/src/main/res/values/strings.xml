@@ -10,4 +10,5 @@
     <string name="server_error">Server Error</string>
     <string name="unknown_error">Unknown Error</string>
     <string name="refresh_button">Reload</string>
+    <string name="multiple_cat_message">Multiple Cats!</string>
 </resources>
