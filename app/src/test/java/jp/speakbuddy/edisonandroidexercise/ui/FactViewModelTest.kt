@@ -6,6 +6,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import jp.speakbuddy.edisonandroidexercise.mapper.FactDisplayDataMapper
+import jp.speakbuddy.edisonandroidexercise.mapper.FactErrorMapper
 import jp.speakbuddy.edisonandroidexercise.repository.FactRepository
 import jp.speakbuddy.edisonandroidexercise.repository.model.FactModel
 import jp.speakbuddy.edisonandroidexercise.ui.common.DefaultTestDispatcherProvider
@@ -23,8 +24,10 @@ import java.io.IOException
 class FactViewModelTest {
     private val factRepository: FactRepository = mockk()
     private val factDisplayDataMapper: FactDisplayDataMapper = mockk()
+    private val errorMapper: FactErrorMapper = mockk()
     private val dispatcherProvider: DefaultTestDispatcherProvider = DefaultTestDispatcherProvider()
-    private val viewModel = FactViewModel(factRepository, factDisplayDataMapper, dispatcherProvider)
+    private val viewModel =
+        FactViewModel(factRepository, factDisplayDataMapper, errorMapper, dispatcherProvider)
 
     private val expectedImageSource =
         ImageSource.Url("https://png.pngtree.com/png-clipart/20220626/original/pngtree-pink-cute-cat-icon-animal-png-yuri-png-image_8188672.png")

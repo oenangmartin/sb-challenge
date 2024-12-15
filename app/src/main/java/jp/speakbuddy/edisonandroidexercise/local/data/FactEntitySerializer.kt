@@ -12,7 +12,7 @@ class FactEntitySerializer @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
 ): Serializer<FactEntity> {
     override val defaultValue: FactEntity
-        get() = FactEntity()
+        get() = FactEntity(length = -1)
 
     override suspend fun readFrom(input: InputStream): FactEntity {
         return try {
@@ -21,7 +21,6 @@ class FactEntitySerializer @Inject constructor(
                 string = input.readBytes().decodeToString()
             )
         } catch (e: Exception) {
-            e.printStackTrace()
             defaultValue
         }
     }

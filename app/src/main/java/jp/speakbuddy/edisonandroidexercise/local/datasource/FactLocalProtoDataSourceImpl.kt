@@ -7,8 +7,14 @@ import javax.inject.Inject
 
 class FactLocalProtoDataSourceImpl @Inject constructor(
     private val factDataStore: DataStore<FactEntity>,
-): FactLocalDataSource {
-    override suspend fun getFact(): FactEntity? = factDataStore.data.firstOrNull()
+) : FactLocalDataSource {
+    override suspend fun getFact(): FactEntity? {
+        val result = factDataStore.data.firstOrNull()
+        if (result == null || result.length == -1) {
+            return null
+        }
+        return result
+    }
 
     override suspend fun updateFact(factEntity: FactEntity): FactEntity {
         return factDataStore.updateData { factEntity }

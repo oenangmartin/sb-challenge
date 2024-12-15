@@ -6,4 +6,8 @@
     <string name="multiple_cat_identifier">cats</string>
     <string name="length_sub_description">Length: %d</string>
     <string name="fact_error_title">An Error Occurred</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="server_error">Server Error</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="refresh_button">Reload</string>
 </resources>
