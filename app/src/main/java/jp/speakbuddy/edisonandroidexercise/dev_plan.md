@@ -1,3 +1,4 @@
+
 # Core Requirements
 ## Persist Latest Cat Fact
 - Goal: Save the latest cat fact locally so it persists between app launches.
@@ -24,8 +25,7 @@
 # Non Core Requirements:
 - Update to toml
 - Update to latest Dependencies
-- Implement Hilt
-- Screenshot tests?
+- CI/CD
 
 
 # Implementation Plan
@@ -50,4 +50,5 @@
     - Add Multiple Cats
     - Add Unit Tests
 - Plan about showing image :white_check_mark:
-- Code Clean Up + Error Handling
+- Error Handling :white_check_mark:
+- Code Cleanup + Docs

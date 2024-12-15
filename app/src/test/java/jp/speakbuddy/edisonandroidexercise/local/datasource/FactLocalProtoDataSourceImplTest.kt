@@ -15,7 +15,7 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class FactLocalProtoDataLottieSourceImplTest {
+class FactLocalProtoDataSourceImplTest {
 
     private val factDataStore: DataStore<FactEntity> = mockk()
     private val factLocalProtoDataSourceImpl = FactLocalProtoDataSourceImpl(factDataStore)
@@ -45,6 +45,19 @@ class FactLocalProtoDataLottieSourceImplTest {
         coEvery { mockFlow.firstOrNull() } returns null
         coEvery { mockFlow.collect(any()) } just Runs
         coEvery { factDataStore.data } returns mockFlow
+
+        // Act
+        val actualFact = factLocalProtoDataSourceImpl.getFact()
+
+        // Assert
+        assertEquals(null, actualFact)
+    }
+
+    @Test
+    fun `when flow return item with length -1 should return null`() = runTest {
+        // Arrange
+        val expectedFact = FactEntity(length = -1)
+        coEvery { factDataStore.data } returns flowOf(expectedFact)
 
         // Act
         val actualFact = factLocalProtoDataSourceImpl.getFact()

@@ -24,7 +24,7 @@ class FactEntitySerializerTest {
     }
 
     @Test
-    fun testReadFrom_validInput_returnsFactEntity() = runTest {
+    fun `when serializer read executed with correct data, should return correct data`() = runTest {
         // Arrange
         val input = ByteArrayInputStream("""{"fact":"Test fact", "length": 20}""".toByteArray())
 
@@ -36,7 +36,7 @@ class FactEntitySerializerTest {
     }
 
     @Test
-    fun testReadFrom_invalidInput_returnsDefaultValue() = runTest {
+    fun `when serializer read from invalid data, should return data with length -1`() = runTest {
         // Arrange
         val input = ByteArrayInputStream("invalid json".toByteArray())
 
@@ -44,11 +44,11 @@ class FactEntitySerializerTest {
         val result = serializer.readFrom(input)
 
         // Assert
-        assertEquals(FactEntity(), result)
+        assertEquals(FactEntity(length = -1), result)
     }
 
     @Test
-    fun testWriteTo_writesFactEntityToOutputStream() = runTest {
+    fun `when serializer write function is executed, should set the output stream correctly`() = runTest {
         // Arrange
         val output = ByteArrayOutputStream()
         val factEntity = FactEntity("Test fact", 20)

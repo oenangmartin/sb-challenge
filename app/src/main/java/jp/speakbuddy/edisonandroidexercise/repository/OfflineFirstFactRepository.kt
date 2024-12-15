@@ -7,7 +7,6 @@ import jp.speakbuddy.edisonandroidexercise.network.data.FactResponse
 import jp.speakbuddy.edisonandroidexercise.network.datasource.FactNetworkDataSource
 import jp.speakbuddy.edisonandroidexercise.repository.model.FactModel
 import kotlinx.coroutines.withContext
-import java.io.IOException
 import javax.inject.Inject
 
 class OfflineFirstFactRepository @Inject constructor(
@@ -33,8 +32,8 @@ class OfflineFirstFactRepository @Inject constructor(
             val factEntity = factLocalDataSource.updateFact(factEntity = it.toFactEntity())
             return Result.success(factEntity.toFactModel())
         }, {
-            return Result.failure(IOException())
-
+            it.printStackTrace()
+            return Result.failure(it)
         })
     }
 }

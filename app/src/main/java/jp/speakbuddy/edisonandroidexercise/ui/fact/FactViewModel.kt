@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.speakbuddy.edisonandroidexercise.common.DispatcherProvider
 import jp.speakbuddy.edisonandroidexercise.mapper.FactDisplayDataMapper
+import jp.speakbuddy.edisonandroidexercise.mapper.FactErrorMapper
 import jp.speakbuddy.edisonandroidexercise.repository.FactRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class FactViewModel @Inject constructor(
     private val factRepository: FactRepository,
     private val factDisplayDataMapper: FactDisplayDataMapper,
+    private val factErrorMapper: FactErrorMapper,
     private val dispatcherProvider: DispatcherProvider,
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<FactUiState> = MutableStateFlow(FactUiState.INITIAL)
@@ -41,9 +43,14 @@ class FactViewModel @Inject constructor(
                     }
                 }
                 .onFailure { throwable ->
-                    // TODO update error message later
+                    val currentUiState = _uiState.value
+                    val message = factErrorMapper.map(throwable)
                     _uiState.update {
-                        FactUiState.Error("Dummy Error Message now")
+                        when (currentUiState) {
+                            is FactUiState.Content -> FactUiState.Content(currentUiState.factDisplayData.copy(toastMessage = message))
+                            is FactUiState.Error -> FactUiState.Error(message)
+                            FactUiState.None -> FactUiState.Error(message)
+                        }
                     }
                 }
         }
