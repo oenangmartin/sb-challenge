@@ -2,9 +2,9 @@ package jp.speakbuddy.edisonandroidexercise.ui.fact
 
 sealed interface FactUiState {
     companion object {
-        val INITIAL = Loading
+        val INITIAL = None
     }
-    data object Loading: FactUiState
+    data object None: FactUiState
     data class Content(
         val factDisplayData: FactDisplayData,
     ) : FactUiState

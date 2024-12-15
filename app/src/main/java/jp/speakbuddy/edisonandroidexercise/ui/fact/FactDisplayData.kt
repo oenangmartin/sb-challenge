@@ -9,4 +9,5 @@ data class FactDisplayData(
     val title: String,
     val fact: String,
     val showMultipleCats: Boolean,
+    val toastMessage: String? = null,
 )

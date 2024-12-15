@@ -24,6 +24,7 @@ fun TypeWriterText(
     text: String,
     style: TextStyle = LocalTextStyle.current,
     typingSpeed: Long = 25L,
+    onTypingComplete: () -> Unit = { },
 ) {
     var textToDisplay by remember { mutableStateOf("") }
 
@@ -33,6 +34,7 @@ fun TypeWriterText(
             textToDisplay += c
             delay(typingSpeed)
         }
+        onTypingComplete()
     }
 
     Text(

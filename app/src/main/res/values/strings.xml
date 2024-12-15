@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Edison Android Exercise</string>
+    <string name="long_fact_title">A Very Long Fact (%d characters)</string>
+    <string name="fact_title">Fact</string>
+    <string name="click_me_description">Pet me for more facts ></string>
+    <string name="multiple_cat_identifier">cats</string>
+    <string name="length_sub_description">Length: %d</string>
+    <string name="fact_error_title">An Error Occurred</string>
 </resources>
