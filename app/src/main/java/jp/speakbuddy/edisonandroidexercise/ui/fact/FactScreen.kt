@@ -210,7 +210,10 @@ fun MultipleCatsPopUp(
                     usePlatformDefaultWidth = true
                 ),
             ) {
-                AnimatorComponent(lottieSource)
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = stringResource(R.string.multiple_cat_message))
+                    AnimatorComponent(lottieSource)
+                }
             }
         }
     }
