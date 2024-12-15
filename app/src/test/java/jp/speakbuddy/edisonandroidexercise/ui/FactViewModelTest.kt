@@ -96,14 +96,44 @@ class FactViewModelTest {
         }
 
     @Test
-    fun `when updateFact is triggered and repository return failure, should return ui state with facts correctly`() =
+    fun `when updateFact is triggered and repository return failure and there's no existing data, should return ui state with facts correctly`() =
         runTest {
-            coEvery { factRepository.getFact(false) } returns Result.failure(IOException())
-
+            val exception = IOException()
+            coEvery { factRepository.getFact(false) } returns Result.failure(exception)
+            every { errorMapper.map(exception) } returns "Dummy Error Message now"
             viewModel.uiState.test {
                 assertEquals(FactUiState.INITIAL, awaitItem())
                 viewModel.updateFact(false)
                 assertEquals(FactUiState.Error("Dummy Error Message now"), awaitItem())
+                ensureAllEventsConsumed()
+            }
+        }
+
+    @Test
+    fun `when updateFact is triggered and repository return failure and there's existing data, should return ui state with facts correctly`() =
+        runTest {
+            val exception = IOException()
+            val newFact = "New Facts"
+            val factModel = FactModel(
+                length = newFact.length,
+                fact = newFact
+            )
+            val expectedFactDisplayData = FactDisplayData(
+                headerImage = expectedImageSource,
+                title = "A Very Long Fact",
+                fact = "Long fact",
+                showMultipleCats = false
+            )
+            val expectedErrorMessage = "Dummy Error Message now"
+            coEvery { factRepository.getFact(false) } returns Result.success(factModel) andThen Result.failure(exception)
+            every { factDisplayDataMapper.map(factModel) } returns expectedFactDisplayData
+            every { errorMapper.map(exception) } returns expectedErrorMessage
+            viewModel.uiState.test {
+                assertEquals(FactUiState.INITIAL, awaitItem())
+                viewModel.updateFact(false)
+                assertEquals(FactUiState.Content(expectedFactDisplayData), awaitItem())
+                viewModel.updateFact(false)
+                assertEquals(FactUiState.Content(expectedFactDisplayData.copy(toastMessage = expectedErrorMessage)), awaitItem())
                 ensureAllEventsConsumed()
             }
         }
