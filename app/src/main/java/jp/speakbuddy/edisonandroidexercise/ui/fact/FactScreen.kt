@@ -1,13 +1,18 @@
 package jp.speakbuddy.edisonandroidexercise.ui.fact
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
@@ -23,6 +29,7 @@ import androidx.compose.ui.window.PopupProperties
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import jp.speakbuddy.edisonandroidexercise.R
 import jp.speakbuddy.edisonandroidexercise.ui.common.TypeWriterText
 import jp.speakbuddy.edisonandroidexercise.ui.common.image.Image
 import jp.speakbuddy.edisonandroidexercise.ui.common.image.ImageSource
@@ -67,13 +74,37 @@ fun FactScreen(
             }
 
             is FactUiState.Error -> {
-                // TODO add Error screen later
+                FactError(errorMessage = uiState.errorMessage)
             }
 
-            FactUiState.Loading -> {
-                // TODO add loading mechanism
-            }
+            // Initial state, doesn't need any implementation
+            FactUiState.None -> Unit
         }
+    }
+}
+
+@Composable
+fun FactError(
+    modifier: Modifier = Modifier,
+    errorMessage: String,
+) {
+    Column(
+        modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(
+            space = 16.dp,
+            alignment = Alignment.CenterVertically
+        )
+    ) {
+        Text(
+            text = stringResource(R.string.fact_error_title),
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        Text(
+            text = errorMessage,
+            style = MaterialTheme.typography.bodyLarge
+        )
     }
 }
 
@@ -91,31 +122,50 @@ fun FactContent(
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.spacedBy(
                 space = 16.dp,
-                alignment = Alignment.Top
+                alignment = Alignment.Bottom
             )
         ) {
-            Image(
+            Card(
                 modifier = Modifier
-                    .size(
-                        width = 160.dp,
-                        height = 160.dp,
-                    ),
-                imageSource = factDisplayData.headerImage
-            )
-            Text(
-                text = factDisplayData.title,
-                style = MaterialTheme.typography.titleLarge
-            )
+                    .padding(8.dp),
+                colors = CardDefaults.cardColors().copy(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                )
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(space = 16.dp)
+                ) {
+                    Text(
+                        text = factDisplayData.title,
+                        style = MaterialTheme.typography.titleMedium
+                    )
 
-            TypeWriterText(
-                text = factDisplayData.fact,
-                style = MaterialTheme.typography.bodyLarge
-            )
-            Button(onClick = onRefreshClicked) {
-                Text(text = "Update fact")
+                    TypeWriterText(
+                        text = factDisplayData.fact,
+                        style = MaterialTheme.typography.bodyLarge,
+                        onTypingComplete = {
+
+                        }
+                    )
+                }
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(text = stringResource(R.string.click_me_description))
+
+                Image(
+                    modifier = Modifier
+                        .size(120.dp)
+                        .clickable { onRefreshClicked.invoke() },
+                    imageSource = factDisplayData.headerImage
+                )
             }
         }
 
@@ -134,7 +184,8 @@ fun MultipleCatsPopUp(
             remember { LottieSource.Url("https://lottie.host/9e613ad4-f91d-4375-9c3f-01e678335f48/9QyHhlOWia.lottie") }
         Box(
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxWidth()
+                .height(300.dp)
                 .zIndex(10f),
         ) {
             Popup(

@@ -44,9 +44,10 @@
 - Add FactModel :white_check_mark:
 - Add FactRepository :white_check_mark:
 - Update FactViewModel to use FactRepository :white_check_mark:
-- Create FactDisplayMapper
+- Create FactDisplayMapper :white_check_mark:
     - Main Function -> Map FactModel to FactDisplayData
     - Add Fact Length
     - Add Multiple Cats
     - Add Unit Tests
-- Plan about showing image
+- Plan about showing image :white_check_mark:
+- Code Clean Up + Error Handling
